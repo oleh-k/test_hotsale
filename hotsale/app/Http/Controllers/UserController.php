@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
@@ -38,6 +40,14 @@ class UserController extends Controller
 
         $validationData = Validator::make($request->all(), $validationRule);
 
+        $date = date("Y-m-d H:m:s:", time()).substr(round(microtime(true)*1000), 10, 3);
+        $arr['date'] = $date;
+        $arr['email'] = $request->email;
+        $arr['validation'] = 'false';
+        
+
+        
+
         if ($validationData->fails()) {
 
             $response = [
@@ -46,11 +56,18 @@ class UserController extends Controller
                 'fails' => $validationData->errors()
             ];
 
+            $data = print_r($arr, true);
+            Storage::disk('local')->put("log/$date.log", $data);
+
             return response($response, 422);
 
         }
 
         $user = User::create($request->all());
+
+        $arr['validation'] = 'true';
+        $data = print_r($arr, true);
+        Storage::disk('local')->put("log/$date.log", $data);
 
         return $user;
     }
