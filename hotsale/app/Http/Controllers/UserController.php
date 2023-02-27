@@ -33,6 +33,7 @@ class UserController extends Controller
         $validationRule = [
             "name" => ["required", "min:2", "max:60"],
             "email" => ["required", "unique:users,email", "email:rfc,dns", "min:2", "max:100"],
+            "password" => ["required", "confirmed"],
         ];
 
         $validationData = Validator::make($request->all(), $validationRule);
