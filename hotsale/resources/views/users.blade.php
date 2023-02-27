@@ -11,6 +11,12 @@
 <body class="antialiased">
     <div class="container">
 
+        <div class="row">
+            <div id="alert" class="form-group show" class="collapse multi-collapse">
+                <a href="/" class=""><< Go to main</a>
+            </div>
+        </div>
+
         <table id="users" class="table">
             <tbody></tbody>
         </table>

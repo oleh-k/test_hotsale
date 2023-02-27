@@ -18,6 +18,8 @@ $(document).ready(function () {
             table.append(row);
             var td = $('<th></th>').text('name');
             row.append(td);
+            td = $('<th></th>').text('lastName');
+            row.append(td);
             td = $('<th></th>').text('email');
             row.append(td);
 
@@ -28,6 +30,8 @@ $(document).ready(function () {
                 table.append(row);
                 row.append(td);
 
+                td = $('<td></td>').text(element.lastName);
+                row.append(td);
                 td = $('<td></td>').text(element.email);
                 row.append(td);
             });
