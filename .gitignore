@@ -1,1 +1,4 @@
 hotsale/.env.example
+/node_modules
+/public/storage
+/vendor
