@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,7 +29,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate request data
+        $validationRule = [
+            "name" => ["required", "min:2", "max:60"],
+            "email" => ["required", "unique:users,email", "email:rfc,dns", "min:2", "max:100"],
+        ];
+
+        $validationData = Validator::make($request->all(), $validationRule);
+
+        if ($validationData->fails()) {
+
+            $response = [
+                'success' => false,
+                'message' => 'Validation failed',
+                'fails' => $validationData->errors()
+            ];
+
+            return response($response, 422);
+
+        }
+
+        $user = User::create($request->all());
+
+        return $user;
     }
 
     /**
